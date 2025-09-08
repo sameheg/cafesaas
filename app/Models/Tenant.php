@@ -39,4 +39,14 @@ class Tenant extends Model
     {
         return $this->hasOne(Theme::class);
     }
+
+    public function notificationTemplates()
+    {
+        return $this->hasMany(NotificationTemplate::class);
+    }
+
+    public function notificationPreferences()
+    {
+        return $this->hasMany(NotificationPreference::class);
+    }
 }

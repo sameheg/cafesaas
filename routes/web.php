@@ -4,6 +4,7 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\BillingDashboardController;
 use App\Http\Controllers\FeatureFlagController;
 use App\Http\Controllers\IntegrationManagerController;
+use App\Http\Controllers\NotificationPreferenceController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SupplyChainController;
 use App\Http\Controllers\TenantModuleController;
@@ -23,6 +24,7 @@ Route::get('/billing', [BillingDashboardController::class, 'index'])
 
 Route::post('/admin/tenants/{tenant}/modules/{module}', [TenantModuleController::class, 'toggle'])
     ->name('admin.modules.toggle');
+Route::get('/admin/tenants/{tenant}/notifications', [NotificationPreferenceController::class, 'dashboard'])->name('admin.notifications.preferences');
 
 Route::get('/admin/integrations', [IntegrationManagerController::class, 'index'])
     ->name('admin.integrations.index');
@@ -40,6 +42,8 @@ Route::prefix('api/v1')->group(function () {
     Route::post('tenants/{tenant}/feature-flags/{key}', [FeatureFlagController::class, 'update']);
     Route::get('tenants/{tenant}/theme.css', [ThemeController::class, 'css']);
     Route::post('tenants/{tenant}/theme', [ThemeController::class, 'update']);
+    Route::get('tenants/{tenant}/notification-preferences', [NotificationPreferenceController::class, 'index']);
+    Route::post('tenants/{tenant}/notification-preferences/{templateKey}/{channel}', [NotificationPreferenceController::class, 'update']);
     Route::prefix('supply-chain')->group(function () {
         Route::get('inventory', [SupplyChainController::class, 'inventory']);
         Route::get('suppliers', [SupplyChainController::class, 'suppliers']);

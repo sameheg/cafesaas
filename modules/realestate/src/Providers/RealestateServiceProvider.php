@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Realestate;
+namespace Modules\Realestate\Providers;
 
 use Modules\ModuleServiceProvider;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Inventory;
+namespace Modules\Inventory\Providers;
 
 use Modules\ModuleServiceProvider;
 

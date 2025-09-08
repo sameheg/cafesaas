@@ -84,7 +84,7 @@ class ModuleRegistry
     {
         $name = Str::studly($key);
 
-        return "Modules\\{$name}\\{$name}ServiceProvider";
+        return "Modules\\{$name}\\Providers\\{$name}ServiceProvider";
     }
 
     /**

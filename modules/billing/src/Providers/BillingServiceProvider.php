@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Billing;
+namespace Modules\Billing\Providers;
 
 use Modules\ModuleServiceProvider;
 

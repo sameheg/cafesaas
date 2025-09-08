@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Hospitality;
+namespace Modules\Hospitality\Providers;
 
 use Modules\ModuleServiceProvider;
 

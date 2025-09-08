@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Pricing;
+namespace Modules\Pricing\Providers;
 
 use Modules\ModuleServiceProvider;
 

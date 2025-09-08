@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AuditLog;
 use App\Models\Tenant;
-use App\Models\TenantModule;
+use App\Models\TenantModuleState;
 use Illuminate\Support\Facades\DB;
 
 class SuperAdminDashboardController extends Controller
@@ -15,7 +15,7 @@ class SuperAdminDashboardController extends Controller
             $q->where('enabled', true);
         }])->get();
 
-        $moduleUsage = TenantModule::select('module', DB::raw('count(*) as count'))
+        $moduleUsage = TenantModuleState::select('module', DB::raw('count(*) as count'))
             ->where('enabled', true)
             ->groupBy('module')
             ->pluck('count', 'module');

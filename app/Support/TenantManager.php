@@ -17,4 +17,16 @@ class TenantManager
     {
         return $this->tenant;
     }
+
+    public function resolveFromHost(string $host): ?Tenant
+    {
+        $parts = explode('.', $host);
+        $domain = implode('.', array_slice($parts, -2));
+
+        $this->tenant = Tenant::where('domain', $host)
+            ->orWhere('domain', $domain)
+            ->first();
+
+        return $this->tenant;
+    }
 }

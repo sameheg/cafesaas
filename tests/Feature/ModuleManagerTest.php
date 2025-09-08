@@ -29,7 +29,7 @@ class ModuleManagerTest extends TestCase
 
         $manager->toggle($tenant, 'billing', true);
 
-        $this->assertDatabaseHas('tenant_modules', [
+        $this->assertDatabaseHas('tenant_module_states', [
             'tenant_id' => $tenant->id,
             'module' => 'billing',
             'enabled' => true,

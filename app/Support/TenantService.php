@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class TenantService
 {
-    public function __construct(private EventBus $bus) {}
+    public function __construct(private EventBus $bus, private ModuleRegistry $registry) {}
 
     public function onboard(string $tenantName, string $adminName, string $adminEmail, string $password): Tenant
     {
@@ -26,6 +26,12 @@ class TenantService
 
         if ($adminRole) {
             $user->roles()->attach($adminRole->id, ['tenant_id' => $tenant->id]);
+        }
+
+        foreach ($this->registry->all() as $key => $meta) {
+            if (($meta['required'] ?? false) === true) {
+                $this->registry->enable($tenant, $key);
+            }
         }
 
         return $tenant;

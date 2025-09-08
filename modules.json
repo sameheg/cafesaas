@@ -1,0 +1,15 @@
+{
+  "modules": [
+    {"key": "core", "required": true},
+    {"key": "security", "required": true},
+    {"key": "billing", "required": true},
+    {"key": "pricing"},
+    {"key": "crm"},
+    {"key": "inventory"},
+    {"key": "hospitality"},
+    {"key": "ecommerce"},
+    {"key": "realestate"},
+    {"key": "recruitment"},
+    {"key": "analytics"}
+  ]
+}

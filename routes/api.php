@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\OrderCreated;
+use App\Events\OrderShipped;
 use App\Http\Controllers\LeaseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RealEstateReportController;
@@ -96,4 +98,29 @@ Route::prefix('v1/checkout')->group(function () {
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('products', ProductController::class);
+});
+
+Route::prefix('v1/orders')->group(function () {
+    Route::post('/', function (Request $request) {
+        $data = $request->validate([
+            'tenant_id' => 'required|integer',
+            'restaurant_table_id' => 'required|integer',
+            'total_cents' => 'nullable|integer',
+        ]);
+
+        $order = Order::create($data);
+        event(new OrderCreated($order));
+
+        return response()->json(['id' => $order->id, 'status' => $order->status]);
+    });
+
+    Route::post('{order}/ship', function (Order $order) {
+        event(new OrderShipped($order));
+
+        return response()->json(['status' => $order->status]);
+    });
+
+    Route::get('{order}', function (Order $order) {
+        return response()->json(['id' => $order->id, 'status' => $order->status]);
+    });
 });

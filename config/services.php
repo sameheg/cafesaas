@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'twilio' => [
+        'sid' => env('TWILIO_SID'),
+        'token' => env('TWILIO_TOKEN'),
+        'from' => env('TWILIO_FROM'),
+        'base_url' => env('TWILIO_BASE_URL', 'https://api.twilio.com'),
+    ],
+
+    'shippo' => [
+        'base_url' => env('SHIPPO_BASE_URL', 'https://api.goshippo.com'),
+        'api_key' => env('SHIPPO_API_KEY'),
+    ],
+
 ];

@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('purchase_order', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tenant_id');
             $table->unsignedBigInteger('purchase_id');
             $table->unsignedBigInteger('order_id');
             $table->timestamps();

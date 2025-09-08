@@ -2,31 +2,23 @@
 
 namespace App\Services;
 
-use App\Models\IntegrationConfig;
 use App\Models\Order;
 use App\Models\Shipment;
-use Illuminate\Support\Facades\Http;
+use App\Services\Integrations\ShippingGatewayFactory;
 
 class ShippingService
 {
+    public function __construct(private ShippingGatewayFactory $factory) {}
+
     public function dispatch(Order $order, string $provider): Shipment
     {
-        $config = IntegrationConfig::where('tenant_id', $order->tenant_id)
-            ->where('service', $provider)
-            ->firstOrFail();
-
-        $baseUrl = rtrim(data_get($config->config_json, 'base_url', ''), '/');
-        $apiKey = data_get($config->config_json, 'api_key');
-
-        $response = Http::withToken($apiKey)
-            ->post($baseUrl.'/shipments', ['order_id' => $order->id]);
-
-        $tracking = $response->json('tracking_number');
+        $gateway = $this->factory->make($provider, $order->tenant_id);
+        $result = $gateway->dispatch($order);
 
         return Shipment::create([
             'tenant_id' => $order->tenant_id,
             'order_id' => $order->id,
-            'tracking_number' => $tracking,
+            'tracking_number' => $result['tracking_number'] ?? '',
             'status' => 'pending',
             'provider' => $provider,
         ]);
@@ -34,21 +26,9 @@ class ShippingService
 
     public function refresh(Shipment $shipment): void
     {
-        $config = IntegrationConfig::where('tenant_id', $shipment->tenant_id)
-            ->where('service', $shipment->provider)
-            ->first();
+        $gateway = $this->factory->make($shipment->provider, $shipment->tenant_id);
 
-        if (! $config) {
-            return;
-        }
-
-        $baseUrl = rtrim(data_get($config->config_json, 'base_url', ''), '/');
-        $apiKey = data_get($config->config_json, 'api_key');
-
-        $response = Http::withToken($apiKey)
-            ->get($baseUrl.'/track/'.$shipment->tracking_number);
-
-        if ($status = $response->json('status')) {
+        if ($status = $gateway->track($shipment)) {
             $shipment->status = $status;
             $shipment->save();
         }

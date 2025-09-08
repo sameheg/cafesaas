@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('recipe_item', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tenant_id');
             $table->unsignedBigInteger('recipe_id');
             $table->unsignedBigInteger('inventory_item_id');
             $table->integer('quantity');

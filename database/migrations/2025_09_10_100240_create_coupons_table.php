@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tenant_id');
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->string('code');
             $table->enum('discount_type', ['percentage', 'fixed']);
             $table->unsignedInteger('value');

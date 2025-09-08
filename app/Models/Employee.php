@@ -10,6 +10,8 @@ class Employee extends Model
 {
     use BelongsToTenant, HasFactory;
 
+    protected $table = 'employee';
+
     protected $fillable = [
         'tenant_id',
         'user_id',

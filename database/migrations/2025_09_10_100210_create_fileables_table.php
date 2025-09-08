@@ -9,13 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fileables', function (Blueprint $table) {
-            $table->unsignedBigInteger('tenant_id');
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->unsignedBigInteger('file_id');
             $table->unsignedBigInteger('fileable_id');
             $table->string('fileable_type');
             $table->timestamps();
 
-            $table->primary(['tenant_id', 'file_id', 'fileable_id', 'fileable_type']);
+            $table->primary(['file_id', 'fileable_id', 'fileable_type']);
             $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');
         });
     }

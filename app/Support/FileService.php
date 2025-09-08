@@ -50,7 +50,9 @@ class FileService
         $disk = Storage::disk($file->disk);
         $expiration = now()->addMinutes($minutes);
 
-        if (method_exists($disk, 'temporaryUrl')) {
+        $driver = config("filesystems.disks.{$file->disk}.driver");
+
+        if ($driver !== 'local' && method_exists($disk, 'temporaryUrl')) {
             return $disk->temporaryUrl($file->path, $expiration);
         }
 

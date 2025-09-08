@@ -7,8 +7,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        DB::statement('DROP VIEW IF EXISTS tenant_user_counts');
+
         DB::statement(<<<'SQL'
-CREATE OR REPLACE VIEW tenant_user_counts AS
+CREATE VIEW tenant_user_counts AS
 select tenant_id, count(*) as user_count from users group by tenant_id
 SQL);
     }

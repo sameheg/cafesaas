@@ -32,8 +32,12 @@ class CheckoutService
     /**
      * @param  array<string,mixed>  $paymentDetails
      */
-    public function processPayment(int $tenantId, Order $order, string $provider, array $paymentDetails, ?string $couponCode = null): Payment
+    public function processPayment(int $tenantId, Order $order, string $provider, array $paymentDetails, ?string $couponCode = null, ?string $idempotencyKey = null): Payment
     {
+        if ($idempotencyKey && ($existing = Payment::where('idempotency_key', $idempotencyKey)->first())) {
+            return $existing;
+        }
+
         if ($couponCode) {
             $coupon = Coupon::where('tenant_id', $tenantId)
                 ->where('code', $couponCode)
@@ -64,6 +68,7 @@ class CheckoutService
             'currency' => $paymentDetails['currency'] ?? 'USD',
             'provider' => $provider,
             'reference' => $result['id'] ?? null,
+            'idempotency_key' => $idempotencyKey,
             'status' => $result['status'] ?? 'unknown',
             'result' => $result,
         ]);

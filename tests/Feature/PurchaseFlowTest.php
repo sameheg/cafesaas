@@ -77,7 +77,7 @@ class PurchaseFlowTest extends TestCase
         };
 
         $checkout = new CheckoutService($factory);
-        $payment = $checkout->processPayment($tenant->id, $order, 'stripe', ['currency' => 'USD'], 'SAVE10');
+        $payment = $checkout->processPayment($tenant->id, $order, 'stripe', ['currency' => 'USD'], 'SAVE10', 'pay-1');
 
         Event::assertDispatched(PaymentProcessed::class);
         $this->assertDatabaseHas('payments', ['id' => $payment->id, 'amount_cents' => 900]);

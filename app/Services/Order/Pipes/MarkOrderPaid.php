@@ -14,17 +14,20 @@ class MarkOrderPaid
         /** @var Order $order */
         $order = $payload['order'];
 
-        $payment = Payment::create([
-            'tenant_id' => $order->tenant_id,
-            'order_id' => $order->id,
-            'subscription_id' => 0,
-            'amount_cents' => $order->total_cents,
-            'currency' => 'USD',
-            'provider' => 'manual',
-            'reference' => 'manual-'.uniqid(),
-            'status' => 'succeeded',
-            'result' => [],
-        ]);
+        $payment = Payment::firstOrCreate(
+            ['idempotency_key' => 'manual:'.$order->id],
+            [
+                'tenant_id' => $order->tenant_id,
+                'order_id' => $order->id,
+                'subscription_id' => 0,
+                'amount_cents' => $order->total_cents,
+                'currency' => 'USD',
+                'provider' => 'manual',
+                'reference' => 'manual-'.uniqid(),
+                'status' => 'succeeded',
+                'result' => [],
+            ]
+        );
 
         event(new PaymentProcessed($order, $payment));
 

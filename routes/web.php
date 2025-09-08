@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\BillingDashboardController;
 use App\Http\Controllers\FeatureFlagController;
 use App\Http\Controllers\IntegrationManagerController;
@@ -25,6 +26,12 @@ Route::get('/admin/integrations', [IntegrationManagerController::class, 'index']
     ->name('admin.integrations.index');
 Route::post('/admin/integrations', [IntegrationManagerController::class, 'store'])
     ->name('admin.integrations.store');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+    Route::get('/analytics/users', [AnalyticsController::class, 'users'])->name('analytics.users');
+    Route::get('/analytics/export', [AnalyticsController::class, 'export'])->name('analytics.export');
+});
 
 Route::prefix('api/v1')->group(function () {
     Route::get('tenants/{tenant}/feature-flags', [FeatureFlagController::class, 'index']);

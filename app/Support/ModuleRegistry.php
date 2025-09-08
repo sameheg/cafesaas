@@ -35,16 +35,22 @@ class ModuleRegistry
      */
     protected array $providers = [];
 
+    /**
+     * Base64 encoded Ed25519 public key used to verify module manifests.
+     */
+    protected string $publicKey;
+
     public function __construct()
     {
         $this->path = base_path('modules.json');
+        $this->publicKey = config('modules.public_key', '');
 
         if (is_file($this->path)) {
             $data = json_decode(file_get_contents($this->path), true) ?? [];
             foreach ($data['modules'] ?? [] as $module) {
                 $key = $module['key'];
-                $this->modules[$key] = ['required' => $module['required'] ?? false];
                 $this->loadedFromFile[$key] = true;
+                $this->register($key, ['required' => $module['required'] ?? false], true);
             }
         }
 
@@ -92,6 +98,55 @@ class ModuleRegistry
     }
 
     /**
+     * Load and verify a module's manifest.
+     */
+    protected function loadManifest(string $key): array
+    {
+        if (! $this->publicKey) {
+            throw new \RuntimeException('Module verification key not configured');
+        }
+
+        $manifestPath = base_path("modules/{$key}/module.json");
+        if (! is_file($manifestPath)) {
+            throw new \RuntimeException("Module manifest not found for [{$key}]");
+        }
+
+        $manifest = json_decode(file_get_contents($manifestPath), true) ?? [];
+
+        if (! isset($manifest['checksum'], $manifest['signature'])) {
+            throw new \RuntimeException("Module manifest incomplete for [{$key}]");
+        }
+
+        $studly = Str::studly($key);
+        $moduleDir = base_path("Modules/{$studly}");
+        $files = [];
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($moduleDir));
+        foreach ($iterator as $file) {
+            if ($file->isFile()) {
+                $files[] = $file->getPathname();
+            }
+        }
+        sort($files);
+        $hashCtx = hash_init('sha256');
+        foreach ($files as $file) {
+            hash_update($hashCtx, file_get_contents($file));
+        }
+        $checksum = hash_final($hashCtx);
+
+        if (! hash_equals($checksum, $manifest['checksum'])) {
+            throw new \RuntimeException("Checksum mismatch for module [{$key}]");
+        }
+
+        $publicKey = base64_decode($this->publicKey);
+        $signature = base64_decode($manifest['signature']);
+        if (! sodium_crypto_sign_verify_detached($signature, $checksum, $publicKey)) {
+            throw new \RuntimeException("Invalid signature for module [{$key}]");
+        }
+
+        return $manifest;
+    }
+
+    /**
      * Registered hooks.
      *
      * @var array<string, array<int, callable>>
@@ -101,11 +156,13 @@ class ModuleRegistry
     /**
      * Register a module with optional metadata.
      */
-    public function register(string $key, array $meta = []): void
+    public function register(string $key, array $meta = [], bool $fromFile = false): void
     {
+        $manifest = $this->loadManifest($key);
+        $meta = array_merge($manifest, $meta);
         $this->modules[$key] = array_merge($this->modules[$key] ?? [], $meta);
 
-        if (! isset($this->loadedFromFile[$key])) {
+        if (! $fromFile && ! isset($this->loadedFromFile[$key])) {
             $this->sync();
         }
 

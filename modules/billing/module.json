@@ -1,0 +1,12 @@
+{
+    "name": "billing",
+    "description": "Billing module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "f7440f613bbfacf6efeb1b66cd7f936de8765e5480581dbd6bc6666a440f3455",
+    "signature": "qH+sCRc59Y9Cj4j7iIJ+tRSN4k0MlIP0W87bXKRo8qdYVTV8ggdeUNU1b69jDNhN6wYC4PUOsVybbzjCMPQXCA=="
+}

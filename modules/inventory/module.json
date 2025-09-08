@@ -1,0 +1,12 @@
+{
+    "name": "inventory",
+    "description": "Inventory module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "f4c112cde13892c0c66bc128c42cc16ac02b7fde1591c2c6298996b97d9bffc2",
+    "signature": "RcIVkdtJl/aqyxE2ekrILpFqn3SdGtnfbtvkIYbXqCIi8vkYOq+Z4YspIdUhghQjsx6FVFx0qjaQyK9d7HSYCA=="
+}

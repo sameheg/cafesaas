@@ -1,0 +1,12 @@
+{
+    "name": "realestate",
+    "description": "Realestate module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "66bdd6a672290d6ae2a4977d0fd12e224e15e1df9a7b8e2345775dbf6a04ddbf",
+    "signature": "4BKHmfaO2zb/Eyzbskgb5zHa+SYN90+zMVc7d0DAHS81nKFaCvbAOE0lfyt2eZn+DL2j38FDzjFSbuCYnaU7CA=="
+}

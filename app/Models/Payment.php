@@ -18,6 +18,7 @@ class Payment extends Model
         'currency',
         'provider',
         'reference',
+        'idempotency_key',
         'status',
         'due_at',
         'paid_at',

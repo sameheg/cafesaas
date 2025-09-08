@@ -5,9 +5,12 @@ namespace App\Listeners;
 use App\Events\OrderDelivered;
 use App\Models\NotificationPreference;
 use App\Notifications\OrderDeliveredNotification;
+use App\Support\ManagesIdempotency;
 
 class SendOrderDeliveredNotification
 {
+    use ManagesIdempotency;
+
     public function handle(OrderDelivered $event): void
     {
         $customer = $event->order->customer ?? null;
@@ -25,6 +28,8 @@ class SendOrderDeliveredNotification
             return;
         }
 
-        $customer->notify(new OrderDeliveredNotification($event->order, $channels));
+        $this->once('order:delivered:'.$event->order->id, function () use ($customer, $event, $channels) {
+            $customer->notify(new OrderDeliveredNotification($event->order, $channels));
+        });
     }
 }

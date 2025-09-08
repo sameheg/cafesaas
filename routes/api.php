@@ -89,6 +89,7 @@ Route::prefix('v1/checkout')->group(function () {
             'provider' => 'required|string',
             'currency' => 'nullable|string|size:3',
             'coupon' => 'nullable|string',
+            'idempotency_key' => 'nullable|string',
         ]);
 
         $order = Order::where('tenant_id', $data['tenant_id'])->findOrFail($data['order_id']);
@@ -98,7 +99,8 @@ Route::prefix('v1/checkout')->group(function () {
             $order,
             $data['provider'],
             $data,
-            $data['coupon'] ?? null
+            $data['coupon'] ?? null,
+            $data['idempotency_key'] ?? null
         );
 
         return response()->json(['status' => $payment->status, 'payment_id' => $payment->id]);

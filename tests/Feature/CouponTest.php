@@ -60,7 +60,7 @@ class CouponTest extends TestCase
 
         $checkout = new CheckoutService($factory);
 
-        $payment = $checkout->processPayment($tenant->id, $order, 'stripe', ['currency' => 'USD'], 'SAVE10');
+        $payment = $checkout->processPayment($tenant->id, $order, 'stripe', ['currency' => 'USD'], 'SAVE10', 'pay-1');
 
         $this->assertEquals(900, $order->fresh()->total_cents);
         $this->assertDatabaseHas('payments', ['id' => $payment->id, 'amount_cents' => 900]);

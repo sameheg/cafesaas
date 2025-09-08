@@ -12,7 +12,7 @@ class IntegrationConfig extends Model
     protected $fillable = ['tenant_id', 'service', 'config_json'];
 
     protected $casts = [
-        'config_json' => 'array',
+        'config_json' => 'encrypted:array',
     ];
 
     public function tenant()

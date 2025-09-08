@@ -4,7 +4,9 @@ use App\Http\Controllers\LeaseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RealEstateReportController;
 use App\Http\Controllers\RenterController;
+use App\Models\Order;
 use App\Services\CartService;
+use App\Services\CheckoutService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +53,47 @@ Route::prefix('v1/cart')->group(function () {
 
         return response()->json(['total' => $total]);
     });
+});
+
+Route::prefix('v1/checkout')->group(function () {
+    Route::post('address', function (Request $request, CheckoutService $checkout) {
+        $data = $request->validate([
+            'tenant_id' => 'required|integer',
+            'address' => 'required|array',
+        ]);
+
+        $checkout->setAddress($data['tenant_id'], $data['address']);
+
+        return response()->json(['status' => 'address_saved']);
+    });
+
+    Route::post('shipping', function (Request $request, CheckoutService $checkout) {
+        $data = $request->validate([
+            'tenant_id' => 'required|integer',
+            'shipping' => 'required|array',
+        ]);
+
+        $checkout->setShipping($data['tenant_id'], $data['shipping']);
+
+        return response()->json(['status' => 'shipping_saved']);
+    });
+
+    Route::post('payment', function (Request $request, CheckoutService $checkout) {
+        $data = $request->validate([
+            'tenant_id' => 'required|integer',
+            'order_id' => 'required|integer',
+            'provider' => 'required|string',
+            'currency' => 'nullable|string|size:3',
+        ]);
+
+        $order = Order::where('tenant_id', $data['tenant_id'])->findOrFail($data['order_id']);
+
+        $payment = $checkout->processPayment($data['tenant_id'], $order, $data['provider'], $data);
+
+        return response()->json(['status' => $payment->status, 'payment_id' => $payment->id]);
+    });
+});
+
 Route::prefix('v1')->group(function () {
     Route::apiResource('products', ProductController::class);
 });

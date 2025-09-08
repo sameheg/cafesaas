@@ -13,6 +13,7 @@ class Payment extends Model
     protected $fillable = [
         'tenant_id',
         'subscription_id',
+        'order_id',
         'amount_cents',
         'currency',
         'provider',
@@ -20,15 +21,22 @@ class Payment extends Model
         'status',
         'due_at',
         'paid_at',
+        'result',
     ];
 
     protected $casts = [
         'due_at' => 'datetime',
         'paid_at' => 'datetime',
+        'result' => 'array',
     ];
 
     public function subscription(): BelongsTo
     {
         return $this->belongsTo(Subscription::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 }

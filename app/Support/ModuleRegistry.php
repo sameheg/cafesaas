@@ -15,6 +15,32 @@ class ModuleRegistry
     protected array $modules = [];
 
     /**
+     * Modules loaded from the JSON registry.
+     *
+     * @var array<string, bool>
+     */
+    protected array $loadedFromFile = [];
+
+    /**
+     * Path to the module registry file.
+     */
+    protected string $path;
+
+    public function __construct()
+    {
+        $this->path = base_path('modules.json');
+
+        if (is_file($this->path)) {
+            $data = json_decode(file_get_contents($this->path), true) ?? [];
+            foreach ($data['modules'] ?? [] as $module) {
+                $key = $module['key'];
+                $this->modules[$key] = ['required' => $module['required'] ?? false];
+                $this->loadedFromFile[$key] = true;
+            }
+        }
+    }
+
+    /**
      * Registered hooks.
      *
      * @var array<string, array<int, callable>>
@@ -26,7 +52,11 @@ class ModuleRegistry
      */
     public function register(string $key, array $meta = []): void
     {
-        $this->modules[$key] = $meta;
+        $this->modules[$key] = array_merge($this->modules[$key] ?? [], $meta);
+
+        if (! isset($this->loadedFromFile[$key])) {
+            $this->sync();
+        }
 
         event(new ModuleRegistered($key, $meta));
     }
@@ -73,5 +103,38 @@ class ModuleRegistry
         foreach ($this->hooks[$event] ?? [] as $callback) {
             $callback(...$payload);
         }
+    }
+
+    /**
+     * Sync the in-memory registry back to the JSON file.
+     */
+    protected function sync(): void
+    {
+        $data = ['modules' => []];
+
+        if (is_file($this->path)) {
+            $data = json_decode(file_get_contents($this->path), true) ?: ['modules' => []];
+        }
+
+        $existing = [];
+        foreach ($data['modules'] as $module) {
+            $existing[$module['key']] = $module;
+        }
+
+        foreach ($this->modules as $key => $meta) {
+            $existing[$key] = [
+                'key' => $key,
+                'required' => $meta['required'] ?? false,
+            ];
+        }
+
+        $data['modules'] = array_values($existing);
+
+        file_put_contents(
+            $this->path,
+            json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES).PHP_EOL
+        );
+
+        $this->loadedFromFile = array_fill_keys(array_keys($existing), true);
     }
 }

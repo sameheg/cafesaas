@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Inventory\Http\Controllers;
 
-use App\Models\InventoryItem;
+use App\Http\Controllers\Controller;
+use Modules\Inventory\Models\InventoryItem;
 use App\Models\Supplier;
 use App\Support\TenantManager;
 use Illuminate\Http\Request;

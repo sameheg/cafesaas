@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace Modules\Pricing\Services;
 
-use App\Events\PriceRuleApplied;
-use App\Models\PriceRule;
-use App\Services\Pricing\PromotionRepository;
+use Modules\Pricing\Events\PriceRuleApplied;
+use Modules\Pricing\Models\PriceRule;
+use Modules\Pricing\Services\Pricing\PromotionRepository;
 use Carbon\Carbon;
 
 class PricingService

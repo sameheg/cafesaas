@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Events;
+namespace Modules\Pricing\Events;
 
-use App\Models\PriceRule;
+use Modules\Pricing\Models\PriceRule;
+use App\Events\DomainEvent;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;

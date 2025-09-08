@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace Modules\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Inventory\Models\InventoryItem;
 
 class StockAlert extends Model
 {

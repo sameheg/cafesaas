@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\PaymentProcessed;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Payment;
@@ -55,7 +56,7 @@ class CheckoutService
 
         $result = $gateway->charge($order, $paymentDetails);
 
-        return Payment::create([
+        $payment = Payment::create([
             'tenant_id' => $tenantId,
             'order_id' => $order->id,
             'subscription_id' => 0,
@@ -66,5 +67,9 @@ class CheckoutService
             'status' => $result['status'] ?? 'unknown',
             'result' => $result,
         ]);
+
+        event(new PaymentProcessed($order, $payment));
+
+        return $payment;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Events\NotificationSent;
 use App\Mail\TemplateMail;
 use App\Models\NotificationTemplate;
+use App\Services\Integrations\SmsGatewayFactory;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -49,7 +50,8 @@ class SendNotification implements ShouldQueue
                     break;
                 case 'sms':
                     if ($notifiable->phone && $template->sms_text) {
-                        Log::info('SMS to '.$notifiable->phone.': '.$template->sms_text);
+                        $gateway = app(SmsGatewayFactory::class)->make('twilio', $notifiable->tenant_id);
+                        $gateway->send($notifiable->phone, $template->sms_text);
                     }
                     break;
                 case 'push':

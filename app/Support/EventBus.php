@@ -16,7 +16,7 @@ class EventBus
 
     public function dispatchNow(string $event, array $payload = []): void
     {
-        $this->dispatcher->dispatch($event, $payload);
+        $this->dispatcher->dispatch($event, [$payload]);
     }
 
     public function subscribe(string $event, callable|string $listener): void

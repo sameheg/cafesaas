@@ -5,6 +5,9 @@ namespace App\Providers;
 use App\Listeners\InitializeTenant;
 use App\Support\EventBus;
 use App\Support\TenantManager;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,5 +21,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(EventBus $bus): void
     {
         $bus->subscribe('tenant.created', InitializeTenant::class);
+
+        RateLimiter::for('global', function (Request $request) {
+            return Limit::perMinute(config('security.throttle_per_minute'))
+                ->by($request->ip());
+        });
     }
 }

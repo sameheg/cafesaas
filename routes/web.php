@@ -26,6 +26,10 @@ Route::get('/billing', [BillingDashboardController::class, 'index'])
 
 Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
 
+Route::get('/admin/tenants/{tenant}/modules', [TenantModuleController::class, 'edit'])
+    ->name('admin.tenants.modules.edit');
+Route::post('/admin/tenants/{tenant}/modules', [TenantModuleController::class, 'update'])
+    ->name('admin.tenants.modules.update');
 Route::post('/admin/tenants/{tenant}/modules/{module}', [TenantModuleController::class, 'toggle'])
     ->name('admin.modules.toggle');
 Route::get('/admin/tenants/{tenant}/notifications', [NotificationPreferenceController::class, 'dashboard'])->name('admin.notifications.preferences');

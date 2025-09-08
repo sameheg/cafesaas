@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LeaseController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RealEstateReportController;
 use App\Http\Controllers\RenterController;
 use App\Services\CartService;
@@ -50,4 +51,6 @@ Route::prefix('v1/cart')->group(function () {
 
         return response()->json(['total' => $total]);
     });
+Route::prefix('v1')->group(function () {
+    Route::apiResource('products', ProductController::class);
 });

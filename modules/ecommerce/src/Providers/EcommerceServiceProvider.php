@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Ecommerce;
+namespace Modules\Ecommerce\Providers;
 
 use Modules\ModuleServiceProvider;
 

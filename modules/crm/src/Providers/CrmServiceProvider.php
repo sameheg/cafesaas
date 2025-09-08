@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Crm;
+namespace Modules\Crm\Providers;
 
 use Modules\ModuleServiceProvider;
 

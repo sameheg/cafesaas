@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Analytics;
+namespace Modules\Analytics\Providers;
 
 use Modules\ModuleServiceProvider;
 

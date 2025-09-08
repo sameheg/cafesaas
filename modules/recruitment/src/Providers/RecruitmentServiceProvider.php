@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Recruitment;
+namespace Modules\Recruitment\Providers;
 
 use Modules\ModuleServiceProvider;
 

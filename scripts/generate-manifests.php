@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -16,8 +15,7 @@ $data = json_decode(file_get_contents($modulesFile), true);
 
 foreach ($data['modules'] as $module) {
     $key = $module['key'];
-    $studly = Str::studly($key);
-    $moduleDir = __DIR__ . '/../Modules/' . $studly;
+    $moduleDir = __DIR__ . '/../modules/' . $key;
 
     $files = [];
     $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($moduleDir));

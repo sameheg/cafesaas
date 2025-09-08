@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Security;
+namespace Modules\Security\Providers;
 
 use Modules\ModuleServiceProvider;
 

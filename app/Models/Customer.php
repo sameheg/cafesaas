@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Notifications\CustomerCreated;
 use App\Support\BelongsToTenant;
+use App\Support\HasFiles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 class Customer extends Model
 {
-    use BelongsToTenant, HasFactory, Notifiable;
+    use BelongsToTenant, HasFactory, HasFiles, Notifiable;
 
     protected $fillable = [
         'name',

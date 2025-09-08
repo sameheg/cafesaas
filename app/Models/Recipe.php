@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Inventory\Models\RecipeItem;
 
 class Recipe extends Model
 {

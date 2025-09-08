@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use Modules\Pricing\Services\PricingService;
 
 class CartService
 {

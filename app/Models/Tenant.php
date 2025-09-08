@@ -2,18 +2,24 @@
 
 namespace App\Models;
 
+use App\Support\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Tenant extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = ['name', 'domain', 'config_json'];
 
     protected $casts = [
         'config_json' => 'array',
     ];
+
+    protected function toSearchableArray(): array
+    {
+        return [$this->name, $this->domain];
+    }
 
     public function modules()
     {

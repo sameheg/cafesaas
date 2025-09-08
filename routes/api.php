@@ -7,6 +7,7 @@ use App\Http\Controllers\LeaseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RealEstateReportController;
 use App\Http\Controllers\RenterController;
+use App\Http\Controllers\SearchController;
 use App\Models\Order;
 use App\Services\CartService;
 use App\Services\CheckoutService;
@@ -107,6 +108,7 @@ Route::prefix('v1/checkout')->group(function () {
 Route::prefix('v1')->group(function () {
     Route::apiResource('products', ProductController::class);
     Route::apiResource('coupons', CouponController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::get('search', [SearchController::class, 'index']);
 });
 
 Route::prefix('v1/orders')->group(function () {

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\BillingDashboardController;
 use App\Http\Controllers\FeatureFlagController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\IntegrationManagerController;
 use App\Http\Controllers\NotificationPreferenceController;
 use App\Http\Controllers\ScheduleController;
@@ -58,3 +59,7 @@ Route::prefix('api/v1')->group(function () {
         Route::get('agents/{user}/tickets', [TicketController::class, 'agent']);
     });
 });
+
+Route::get('/files/{file}', [FileController::class, 'download'])
+    ->name('files.download')
+    ->middleware('signed');

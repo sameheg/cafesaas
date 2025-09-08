@@ -38,6 +38,11 @@ class Customer extends Model
         return $this->hasMany(CustomerInteraction::class);
     }
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
     public function recordInteraction(string $type, ?string $details = null): CustomerInteraction
     {
         return $this->interactions()->create([

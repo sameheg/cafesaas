@@ -2,6 +2,7 @@
 
 use App\Events\OrderCreated;
 use App\Events\OrderShipped;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\LeaseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RealEstateReportController;
@@ -86,11 +87,18 @@ Route::prefix('v1/checkout')->group(function () {
             'order_id' => 'required|integer',
             'provider' => 'required|string',
             'currency' => 'nullable|string|size:3',
+            'coupon' => 'nullable|string',
         ]);
 
         $order = Order::where('tenant_id', $data['tenant_id'])->findOrFail($data['order_id']);
 
-        $payment = $checkout->processPayment($data['tenant_id'], $order, $data['provider'], $data);
+        $payment = $checkout->processPayment(
+            $data['tenant_id'],
+            $order,
+            $data['provider'],
+            $data,
+            $data['coupon'] ?? null
+        );
 
         return response()->json(['status' => $payment->status, 'payment_id' => $payment->id]);
     });
@@ -98,6 +106,7 @@ Route::prefix('v1/checkout')->group(function () {
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('products', ProductController::class);
+    Route::apiResource('coupons', CouponController::class)->only(['index', 'store', 'update', 'destroy']);
 });
 
 Route::prefix('v1/orders')->group(function () {

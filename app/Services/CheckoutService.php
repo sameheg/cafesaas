@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Services\Integrations\PaymentGatewayFactory;
+use InvalidArgumentException;
 
 class CheckoutService
 {
@@ -29,8 +31,26 @@ class CheckoutService
     /**
      * @param  array<string,mixed>  $paymentDetails
      */
-    public function processPayment(int $tenantId, Order $order, string $provider, array $paymentDetails): Payment
+    public function processPayment(int $tenantId, Order $order, string $provider, array $paymentDetails, ?string $couponCode = null): Payment
     {
+        if ($couponCode) {
+            $coupon = Coupon::where('tenant_id', $tenantId)
+                ->where('code', $couponCode)
+                ->first();
+
+            if (! $coupon || ! $coupon->isValid()) {
+                throw new InvalidArgumentException('Invalid coupon.');
+            }
+
+            $discount = $coupon->discountAmount($order->total_cents);
+            $order->total_cents -= $discount;
+            $order->save();
+
+            if (! is_null($coupon->usage_limit)) {
+                $coupon->decrement('usage_limit');
+            }
+        }
+
         $gateway = $this->gateways->make($provider, $tenantId);
 
         $result = $gateway->charge($order, $paymentDetails);

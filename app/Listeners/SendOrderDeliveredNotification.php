@@ -3,9 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\OrderDelivered;
-use App\Models\NotificationPreference;
+use App\Notifications\Channels\SmsChannel;
 use App\Notifications\OrderDeliveredNotification;
 use App\Support\ManagesIdempotency;
+use Illuminate\Support\Facades\Notification;
 
 class SendOrderDeliveredNotification
 {
@@ -18,18 +19,8 @@ class SendOrderDeliveredNotification
             return;
         }
 
-        $channels = NotificationPreference::where('tenant_id', $event->order->tenant_id)
-            ->where('template_key', 'order.delivered')
-            ->where('enabled', true)
-            ->pluck('channel')
-            ->toArray();
-
-        if (empty($channels)) {
-            return;
-        }
-
-        $this->once('order:delivered:'.$event->order->id, function () use ($customer, $event, $channels) {
-            $customer->notify(new OrderDeliveredNotification($event->order, $channels));
+        $this->once('order:delivered:'.$event->order->id, function () use ($customer, $event) {
+            Notification::send($customer, new OrderDeliveredNotification($event->order, ['mail', SmsChannel::class]));
         });
     }
 }

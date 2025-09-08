@@ -8,14 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('timesheets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tenant_id');
-            $table->foreignId('restaurant_table_id')->nullable()->constrained();
-            $table->string('status')->default('pending');
-            $table->unsignedBigInteger('total_cents')->default(0);
-            $table->timestamp('placed_at')->nullable();
-            $table->timestamp('completed_at')->nullable();
+            $table->foreignId('employee_id')->constrained('employee')->cascadeOnDelete();
+            $table->date('date');
+            $table->string('clock_in');
+            $table->string('clock_out');
             $table->timestamps();
             $table->index('tenant_id');
         });
@@ -23,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('timesheets');
     }
 };

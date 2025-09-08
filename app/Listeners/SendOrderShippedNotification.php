@@ -3,9 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use App\Models\NotificationPreference;
+use App\Notifications\Channels\SmsChannel;
 use App\Notifications\OrderShippedNotification;
 use App\Support\ManagesIdempotency;
+use Illuminate\Support\Facades\Notification;
 
 class SendOrderShippedNotification
 {
@@ -18,18 +19,8 @@ class SendOrderShippedNotification
             return;
         }
 
-        $channels = NotificationPreference::where('tenant_id', $event->order->tenant_id)
-            ->where('template_key', 'order.shipped')
-            ->where('enabled', true)
-            ->pluck('channel')
-            ->toArray();
-
-        if (empty($channels)) {
-            return;
-        }
-
-        $this->once('order:shipped:'.$event->order->id, function () use ($customer, $event, $channels) {
-            $customer->notify(new OrderShippedNotification($event->order, $channels));
+        $this->once('order:shipped:'.$event->order->id, function () use ($customer, $event) {
+            Notification::send($customer, new OrderShippedNotification($event->order, ['mail', SmsChannel::class]));
         });
     }
 }

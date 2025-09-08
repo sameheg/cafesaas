@@ -3,10 +3,13 @@
 namespace App\Providers;
 
 use App\Events\OrderCreated;
+use App\Events\OrderDelivered;
 use App\Events\OrderShipped;
 use App\Listeners\AddEmployeeFromCv;
 use App\Listeners\InitializeTenant;
 use App\Listeners\LogTicketFeedbackToCrm;
+use App\Listeners\SendOrderDeliveredNotification;
+use App\Listeners\SendOrderShippedNotification;
 use App\Listeners\SetOrderStatusCreated;
 use App\Listeners\SetOrderStatusShipped;
 use App\Support\EventBus;
@@ -35,6 +38,9 @@ class AppServiceProvider extends ServiceProvider
 
         Event::listen(OrderCreated::class, [SetOrderStatusCreated::class, 'handle']);
         Event::listen(OrderShipped::class, [SetOrderStatusShipped::class, 'handle']);
+
+        Event::listen(OrderShipped::class, [SendOrderShippedNotification::class, 'handle']);
+        Event::listen(OrderDelivered::class, [SendOrderDeliveredNotification::class, 'handle']);
 
         RateLimiter::for('global', function (Request $request) {
             return Limit::perMinute(config('security.throttle_per_minute'))

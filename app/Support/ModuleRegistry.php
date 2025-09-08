@@ -2,8 +2,10 @@
 
 namespace App\Support;
 
+use App\Contracts\ModuleContract;
 use App\Events\ModuleRegistered;
 use App\Models\Tenant;
+use Illuminate\Support\Str;
 
 class ModuleRegistry
 {
@@ -26,6 +28,13 @@ class ModuleRegistry
      */
     protected string $path;
 
+    /**
+     * Loaded service providers keyed by module key.
+     *
+     * @var array<string, ModuleContract>
+     */
+    protected array $providers = [];
+
     public function __construct()
     {
         $this->path = base_path('modules.json');
@@ -38,6 +47,48 @@ class ModuleRegistry
                 $this->loadedFromFile[$key] = true;
             }
         }
+
+        $this->registerProviders();
+    }
+
+    /**
+     * Resolve and register module service providers.
+     */
+    protected function registerProviders(): void
+    {
+        foreach (array_keys($this->modules) as $key) {
+            $class = $this->providerClass($key);
+            if (! class_exists($class)) {
+                continue;
+            }
+
+            $provider = new $class(app());
+            if ($provider instanceof ModuleContract) {
+                $provider->register();
+                $provider->boot();
+                $this->providers[$key] = $provider;
+            }
+        }
+    }
+
+    /**
+     * Build the service provider class name for a module key.
+     */
+    protected function providerClass(string $key): string
+    {
+        $name = Str::studly($key);
+
+        return "Modules\\{$name}\\{$name}ServiceProvider";
+    }
+
+    /**
+     * Get loaded service providers.
+     *
+     * @return array<string, ModuleContract>
+     */
+    public function providers(): array
+    {
+        return $this->providers;
     }
 
     /**

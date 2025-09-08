@@ -1,0 +1,12 @@
+{
+    "name": "security",
+    "description": "Security module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "072953b2d04e2a033193965cbb1f0cc68781a0086caa28f47e92988bb9d98add",
+    "signature": "WS2ocNMzHcowLT7Ed4hzhlQlUQZsjetOhRcNBkgxEk2NLUbWTCwRwgl4/qLiSMjb9lYuooLDZ/3Xfwcy6VSBBA=="
+}

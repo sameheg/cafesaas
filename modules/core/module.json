@@ -1,0 +1,12 @@
+{
+    "name": "core",
+    "description": "Core module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "a748195ee41e3af77749c22d50dfc00096a5b907ebda1109cb27d92a68f372f4",
+    "signature": "NQ5C+L/2Q4GH3jxAd/3odjGq6DWns3DLbmwstJlWoH2Cz02PRHaDbDwYAPgf6rAzDdksnySGP2jR15+j1yc6DA=="
+}

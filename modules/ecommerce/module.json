@@ -1,0 +1,12 @@
+{
+    "name": "ecommerce",
+    "description": "Ecommerce module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "7dbc08d03bc7f7039e5cbb6df2ae8f2b431c242ac5001d21ecc189093b68c5b9",
+    "signature": "FhgGmIAQN4wJ1sOYPUf1blg2XLnRha12YK8+6uBDT1RG5UTWmbFyoVqiB0i6o8vRkkgVaLe1C6rmWjVrh5ygDw=="
+}

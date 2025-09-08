@@ -1,0 +1,12 @@
+{
+    "name": "analytics",
+    "description": "Analytics module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "a1a7492a959efa13740d72f18062e8483669379c5bb54a9d81aec9b38d54ff89",
+    "signature": "8MfpCSlhKLRUoVAE04K4kXSoWdkkcXcXj2q0kywQgpp1UlzZ5bNaEg28DZO5IdGe35tAlBd7wRidym7/SrEQBw=="
+}

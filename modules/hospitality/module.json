@@ -1,0 +1,12 @@
+{
+    "name": "hospitality",
+    "description": "Hospitality module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "d24f929a650f12755fea715646d2051379778c06b1e2f534754498fdfe500f84",
+    "signature": "0iQLn0D/TAvz9f8i6SGHmrIuUF1Ntt8Z7KC1XWQBdrZ1ZKwtvxaitW87WmrrszvDdxOvhb/qci5WPWF2XaUwDg=="
+}

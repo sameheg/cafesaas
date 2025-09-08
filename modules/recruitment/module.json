@@ -1,0 +1,12 @@
+{
+    "name": "recruitment",
+    "description": "Recruitment module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "0daf049edd3bbe58d45fc3e25c23a6ef94e22440cffec4481b5d5341cca36f0c",
+    "signature": "OBIHMacb3zj2tDcZqPkiLrvWdNjSaT4MNxY8Xg/Ey5AV8+wdTTrT2BuFwF7Y7gvs7uvI/0atknVEB0nRjy1wAg=="
+}

@@ -1,0 +1,12 @@
+{
+    "name": "crm",
+    "description": "Crm module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "84287a7c3b2d4e0fa67daee2f82a472ea5b26b27992946eb34bfe54a2226a325",
+    "signature": "XUoEM9HvzvFgLbar/5CDPRH5gw9Q434TURq/du5ecj7FhCnxQZufqVF02rNcFgTR+XZl8/jvLZqgzUnkRG4uBQ=="
+}

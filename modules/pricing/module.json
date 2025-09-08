@@ -1,0 +1,12 @@
+{
+    "name": "pricing",
+    "description": "Pricing module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [],
+    "roles": [],
+    "checksum": "b31262dfd0fa9540b0c2ad6604dee0be692c7f0c5dc01aedb95f309cf5738b63",
+    "signature": "Ahxmqu0SEqWvOSuKnWGjsW7ZZzSf1lWLbISTA3KIdSupgc30KaFcK3hnJes5wpIh+eLEKr2aSGJnc7+8ngIaAg=="
+}

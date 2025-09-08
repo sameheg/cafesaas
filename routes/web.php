@@ -5,6 +5,7 @@ use App\Http\Controllers\BillingDashboardController;
 use App\Http\Controllers\FeatureFlagController;
 use App\Http\Controllers\IntegrationManagerController;
 use App\Http\Controllers\NotificationPreferenceController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SupplyChainController;
 use App\Http\Controllers\TenantModuleController;
@@ -21,6 +22,8 @@ Route::get('/admin', [SuperAdminDashboardController::class, 'index'])
 
 Route::get('/billing', [BillingDashboardController::class, 'index'])
     ->name('billing.dashboard');
+
+Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
 
 Route::post('/admin/tenants/{tenant}/modules/{module}', [TenantModuleController::class, 'toggle'])
     ->name('admin.modules.toggle');

@@ -31,6 +31,50 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
+            "Modules\\Analytics\\": [
+                "modules/analytics/src",
+                "modules/analytics"
+            ],
+            "Modules\\Billing\\": [
+                "modules/billing/src",
+                "modules/billing"
+            ],
+            "Modules\\Core\\": [
+                "modules/core/src",
+                "modules/core"
+            ],
+            "Modules\\Crm\\": [
+                "modules/crm/src",
+                "modules/crm"
+            ],
+            "Modules\\Ecommerce\\": [
+                "modules/ecommerce/src",
+                "modules/ecommerce"
+            ],
+            "Modules\\Hospitality\\": [
+                "modules/hospitality/src",
+                "modules/hospitality"
+            ],
+            "Modules\\Inventory\\": [
+                "modules/inventory/src",
+                "modules/inventory"
+            ],
+            "Modules\\Pricing\\": [
+                "modules/pricing/src",
+                "modules/pricing"
+            ],
+            "Modules\\Realestate\\": [
+                "modules/realestate/src",
+                "modules/realestate"
+            ],
+            "Modules\\Recruitment\\": [
+                "modules/recruitment/src",
+                "modules/recruitment"
+            ],
+            "Modules\\Security\\": [
+                "modules/security/src",
+                "modules/security"
+            ],
             "Modules\\": "Modules/"
         }
     },

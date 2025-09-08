@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Pricing\Http\Controllers;
 
-use App\Services\Pricing\Promotion;
-use App\Services\Pricing\PromotionRepository;
-use App\Services\Pricing\PromotionType;
+use App\Http\Controllers\Controller;
+use Modules\Pricing\Services\Pricing\Promotion;
+use Modules\Pricing\Services\Pricing\PromotionRepository;
+use Modules\Pricing\Services\Pricing\PromotionType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

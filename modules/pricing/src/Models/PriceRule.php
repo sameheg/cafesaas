@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Modules\Pricing\Models;
 
 use App\Support\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

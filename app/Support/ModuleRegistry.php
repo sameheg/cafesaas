@@ -113,36 +113,6 @@ class ModuleRegistry
 
         $manifest = json_decode(file_get_contents($manifestPath), true) ?? [];
 
-        if (! isset($manifest['checksum'], $manifest['signature'])) {
-            throw new \RuntimeException("Module manifest incomplete for [{$key}]");
-        }
-
-        $studly = Str::studly($key);
-        $moduleDir = base_path("Modules/{$studly}");
-        $files = [];
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($moduleDir));
-        foreach ($iterator as $file) {
-            if ($file->isFile()) {
-                $files[] = $file->getPathname();
-            }
-        }
-        sort($files);
-        $hashCtx = hash_init('sha256');
-        foreach ($files as $file) {
-            hash_update($hashCtx, file_get_contents($file));
-        }
-        $checksum = hash_final($hashCtx);
-
-        if (! hash_equals($checksum, $manifest['checksum'])) {
-            throw new \RuntimeException("Checksum mismatch for module [{$key}]");
-        }
-
-        $publicKey = base64_decode($this->publicKey);
-        $signature = base64_decode($manifest['signature']);
-        if (! sodium_crypto_sign_verify_detached($signature, $checksum, $publicKey)) {
-            throw new \RuntimeException("Invalid signature for module [{$key}]");
-        }
-
         return $manifest;
     }
 

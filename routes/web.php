@@ -8,7 +8,7 @@ use App\Http\Controllers\IntegrationManagerController;
 use App\Http\Controllers\NotificationPreferenceController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SuperAdminDashboardController;
-use App\Http\Controllers\SupplyChainController;
+use Modules\Inventory\Http\Controllers\SupplyChainController;
 use App\Http\Controllers\TenantModuleController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\TicketController;

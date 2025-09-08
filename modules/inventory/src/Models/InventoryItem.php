@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace Modules\Inventory\Models;
 
-use App\Events\InventoryStockLow;
+use Modules\Inventory\Events\InventoryStockLow;
+use Modules\Inventory\Models\StockAlert;
+use App\Models\Branch;
 use Illuminate\Database\Eloquent\Model;
 
 class InventoryItem extends Model

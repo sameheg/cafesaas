@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Events;
+namespace Modules\Inventory\Events;
 
-use App\Models\InventoryItem;
+use Modules\Inventory\Models\InventoryItem;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;

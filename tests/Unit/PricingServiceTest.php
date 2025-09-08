@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Events\PriceRuleApplied;
-use App\Models\PriceRule;
+use Modules\Pricing\Events\PriceRuleApplied;
+use Modules\Pricing\Models\PriceRule;
 use App\Models\Tenant;
-use App\Services\PricingService;
+use Modules\Pricing\Services\PricingService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;

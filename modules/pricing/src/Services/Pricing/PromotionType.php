@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Pricing;
+namespace Modules\Pricing\Services\Pricing;
 
 enum PromotionType: string
 {

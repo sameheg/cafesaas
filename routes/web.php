@@ -5,6 +5,7 @@ use App\Http\Controllers\BillingDashboardController;
 use App\Http\Controllers\FeatureFlagController;
 use App\Http\Controllers\IntegrationManagerController;
 use App\Http\Controllers\SuperAdminDashboardController;
+use App\Http\Controllers\SupplyChainController;
 use App\Http\Controllers\TenantModuleController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +39,9 @@ Route::prefix('api/v1')->group(function () {
     Route::post('tenants/{tenant}/feature-flags/{key}', [FeatureFlagController::class, 'update']);
     Route::get('tenants/{tenant}/theme.css', [ThemeController::class, 'css']);
     Route::post('tenants/{tenant}/theme', [ThemeController::class, 'update']);
+    Route::prefix('supply-chain')->group(function () {
+        Route::get('inventory', [SupplyChainController::class, 'inventory']);
+        Route::get('suppliers', [SupplyChainController::class, 'suppliers']);
+        Route::post('link-order', [SupplyChainController::class, 'linkOrder']);
+    });
 });

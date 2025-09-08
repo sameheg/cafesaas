@@ -8,6 +8,7 @@ use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SupplyChainController;
 use App\Http\Controllers\TenantModuleController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,5 +44,10 @@ Route::prefix('api/v1')->group(function () {
         Route::get('inventory', [SupplyChainController::class, 'inventory']);
         Route::get('suppliers', [SupplyChainController::class, 'suppliers']);
         Route::post('link-order', [SupplyChainController::class, 'linkOrder']);
+    });
+
+    Route::prefix('support')->group(function () {
+        Route::get('customers/{customer}/tickets', [TicketController::class, 'customer']);
+        Route::get('agents/{user}/tickets', [TicketController::class, 'agent']);
     });
 });

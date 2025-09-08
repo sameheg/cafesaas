@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\FeatureFlagController;
 use App\Http\Controllers\IntegrationManagerController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\TenantModuleController;
+use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,3 +21,10 @@ Route::get('/admin/integrations', [IntegrationManagerController::class, 'index']
     ->name('admin.integrations.index');
 Route::post('/admin/integrations', [IntegrationManagerController::class, 'store'])
     ->name('admin.integrations.store');
+
+Route::prefix('api/v1')->group(function () {
+    Route::get('tenants/{tenant}/feature-flags', [FeatureFlagController::class, 'index']);
+    Route::post('tenants/{tenant}/feature-flags/{key}', [FeatureFlagController::class, 'update']);
+    Route::get('tenants/{tenant}/theme.css', [ThemeController::class, 'css']);
+    Route::post('tenants/{tenant}/theme', [ThemeController::class, 'update']);
+});

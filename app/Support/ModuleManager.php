@@ -2,16 +2,17 @@
 
 namespace App\Support;
 
+use App\Models\AuditLog;
+use App\Models\FeatureFlag;
 use App\Models\Tenant;
 use App\Models\TenantModule;
-use App\Models\AuditLog;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\DB;
 
 class ModuleManager
 {
     /**
      * Map of module dependencies.
+     *
      * @var array<string,array<int,string>>
      */
     protected array $dependencies = [
@@ -37,6 +38,8 @@ class ModuleManager
             ['enabled' => $enabled]
         );
 
+        $this->flag($tenant, $module, $enabled);
+
         AuditLog::create([
             'tenant_id' => $tenant->id,
             'action' => 'module.toggled',
@@ -47,5 +50,21 @@ class ModuleManager
         ]);
 
         return $tenantModule;
+    }
+
+    public function flag(Tenant $tenant, string $key, bool $enabled): FeatureFlag
+    {
+        return FeatureFlag::updateOrCreate(
+            ['tenant_id' => $tenant->id, 'key' => $key],
+            ['enabled' => $enabled]
+        );
+    }
+
+    public function flagEnabled(Tenant $tenant, string $key): bool
+    {
+        return $tenant->featureFlags()
+            ->where('key', $key)
+            ->where('enabled', true)
+            ->exists();
     }
 }

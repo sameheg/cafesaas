@@ -29,4 +29,14 @@ class Tenant extends Model
     {
         return $this->hasMany(Role::class);
     }
+
+    public function featureFlags()
+    {
+        return $this->hasMany(FeatureFlag::class);
+    }
+
+    public function theme()
+    {
+        return $this->hasOne(Theme::class);
+    }
 }

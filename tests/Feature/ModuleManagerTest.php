@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\AuditLog;
+use App\Events\DomainEvent;
 use App\Models\Tenant;
 use App\Support\ModuleManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,7 +16,7 @@ class ModuleManagerTest extends TestCase
     public function test_prevents_enabling_without_dependencies(): void
     {
         $tenant = Tenant::factory()->create();
-        $manager = new ModuleManager();
+        $manager = new ModuleManager;
 
         $this->expectException(ValidationException::class);
         $manager->toggle($tenant, 'analytics', true);
@@ -25,7 +25,7 @@ class ModuleManagerTest extends TestCase
     public function test_logs_module_toggles(): void
     {
         $tenant = Tenant::factory()->create();
-        $manager = new ModuleManager();
+        $manager = new ModuleManager;
 
         $manager->toggle($tenant, 'billing', true);
 
@@ -37,7 +37,7 @@ class ModuleManagerTest extends TestCase
 
         $this->assertDatabaseHas('audit_logs', [
             'tenant_id' => $tenant->id,
-            'action' => 'module.toggled',
+            'action' => DomainEvent::MODULE_TOGGLED->value,
         ]);
     }
 }

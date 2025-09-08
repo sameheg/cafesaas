@@ -2,6 +2,7 @@
 
 namespace App\Support\Security;
 
+use App\Events\DomainEvent;
 use App\Support\EventBus;
 
 class Mfa
@@ -43,7 +44,7 @@ class Mfa
     public function challengeTotp(int $userId, string $secret): string
     {
         $code = $this->generateCode($secret);
-        $this->bus->dispatchNow('auth.mfa_challenge', [
+        $this->bus->dispatchNow(DomainEvent::AUTH_MFA_CHALLENGE->value, [
             'user_id' => $userId,
             'method' => 'totp',
         ]);
@@ -55,7 +56,7 @@ class Mfa
     {
         $code = $this->generateCode($secret);
         // SMS dispatch stub could be implemented here.
-        $this->bus->dispatchNow('auth.mfa_challenge', [
+        $this->bus->dispatchNow(DomainEvent::AUTH_MFA_CHALLENGE->value, [
             'user_id' => $userId,
             'method' => 'sms',
             'phone' => $phone,

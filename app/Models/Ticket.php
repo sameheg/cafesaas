@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\DomainEvent;
 use App\Support\BelongsToTenant;
 use App\Support\EventBus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,7 +43,7 @@ class Ticket extends Model
             'feedback' => $feedback,
         ]);
 
-        app(EventBus::class)->dispatchNow('ticket.resolved', [
+        app(EventBus::class)->dispatchNow(DomainEvent::TICKET_RESOLVED->value, [
             'ticket_id' => $this->id,
             'customer_id' => $this->customer_id,
             'category' => $this->category,

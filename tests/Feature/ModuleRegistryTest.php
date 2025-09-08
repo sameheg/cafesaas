@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Events\DomainEvent;
 use App\Events\ModuleRegistered;
 use App\Events\ModuleToggled;
 use App\Models\Tenant;
@@ -36,7 +37,7 @@ class ModuleRegistryTest extends TestCase
         $tenant = Tenant::factory()->create();
 
         $fired = false;
-        $registry->hook('module.enabled', function (Tenant $t, string $module) use ($tenant, &$fired) {
+        $registry->hook(DomainEvent::MODULE_ENABLED->value, function (Tenant $t, string $module) use ($tenant, &$fired) {
             if ($t->is($tenant) && $module === 'billing') {
                 $fired = true;
             }

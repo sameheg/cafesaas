@@ -2,13 +2,21 @@
 
 ## Supported Events
 
-The orchestrator consumes and publishes domain topics across modules. Initial topics include:
+All events follow the `domain.action` naming convention. The orchestrator consumes and publishes domain topics across modules. Initial topics include:
 
 - `tenant.created`
 - `tenant.activated`
 - `user.invited`
 - `module.toggled`
+- `module.enabled`
+- `module.disabled`
 - `tenant.suspended`
+- `order.created`
+- `payment.failed`
+- `invoice.issued`
+- `invoice.paid`
+- `candidate.accepted`
+- `ticket.resolved`
 
 These events are dispatched through the internal `EventBus` which fans out to module listeners.
 

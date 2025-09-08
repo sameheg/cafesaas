@@ -9,7 +9,7 @@ class AuditLog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tenant_id', 'action', 'meta'];
+    protected $fillable = ['tenant_id', 'user_id', 'action', 'meta'];
 
     protected $casts = [
         'meta' => 'array',

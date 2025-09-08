@@ -6,6 +6,7 @@ use App\Listeners\AddEmployeeFromCv;
 use App\Listeners\InitializeTenant;
 use App\Listeners\LogTicketFeedbackToCrm;
 use App\Support\EventBus;
+use App\Support\ModuleRegistry;
 use App\Support\TenantManager;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(EventBus::class);
         $this->app->singleton(TenantManager::class);
+        $this->app->singleton(ModuleRegistry::class);
     }
 
     public function boot(EventBus $bus): void

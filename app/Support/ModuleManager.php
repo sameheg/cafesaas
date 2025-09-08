@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Events\ModuleToggled;
 use App\Models\AuditLog;
 use App\Models\FeatureFlag;
 use App\Models\Tenant;
@@ -10,6 +11,11 @@ use Illuminate\Validation\ValidationException;
 
 class ModuleManager
 {
+    public function __construct(protected ?ModuleRegistry $registry = null)
+    {
+        $this->registry = $registry ?? app(ModuleRegistry::class);
+    }
+
     /**
      * Map of module dependencies.
      *
@@ -48,6 +54,13 @@ class ModuleManager
                 'enabled' => $enabled,
             ],
         ]);
+
+        event(new ModuleToggled($tenant, $module, $enabled));
+        $this->registry?->dispatchHook(
+            $enabled ? 'module.enabled' : 'module.disabled',
+            $tenant,
+            $module
+        );
 
         return $tenantModule;
     }

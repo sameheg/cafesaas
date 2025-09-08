@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BillingDashboardController;
 use App\Http\Controllers\FeatureFlagController;
 use App\Http\Controllers\IntegrationManagerController;
 use App\Http\Controllers\SuperAdminDashboardController;
@@ -13,6 +14,9 @@ Route::get('/', function () {
 
 Route::get('/admin', [SuperAdminDashboardController::class, 'index'])
     ->name('admin.dashboard');
+
+Route::get('/billing', [BillingDashboardController::class, 'index'])
+    ->name('billing.dashboard');
 
 Route::post('/admin/tenants/{tenant}/modules/{module}', [TenantModuleController::class, 'toggle'])
     ->name('admin.modules.toggle');

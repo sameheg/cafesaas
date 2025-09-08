@@ -4,11 +4,17 @@ namespace App\Services;
 
 use App\Events\PriceRuleApplied;
 use App\Models\PriceRule;
+use App\Services\Pricing\PromotionRepository;
 use Carbon\Carbon;
 
 class PricingService
 {
-    public function apply(float $price, int $tenantId, ?int $branchId, int $quantity, ?Carbon $now = null): float
+    public function __construct(private ?PromotionRepository $promotions = null)
+    {
+        $this->promotions = $promotions ?: new PromotionRepository;
+    }
+
+    public function apply(float $price, int $tenantId, ?int $branchId, int $quantity, ?Carbon $now = null, array $events = []): float
     {
         $now = $now ?: now();
 
@@ -24,10 +30,15 @@ class PricingService
 
         foreach ($rules as $rule) {
             if ($this->matches($rule, $branchId, $quantity, $now)) {
-                $newPrice = $this->evaluateFormula($rule->formula, $price, $quantity);
+                $price = $this->evaluateFormula($rule->formula, $price, $quantity);
                 event(new PriceRuleApplied($rule));
+                break;
+            }
+        }
 
-                return $newPrice;
+        foreach ($this->promotions->all($tenantId) as $promotion) {
+            if ($promotion->isActive($quantity, $now, $events)) {
+                $price = $promotion->apply($price);
             }
         }
 

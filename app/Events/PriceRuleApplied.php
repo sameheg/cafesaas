@@ -23,6 +23,6 @@ class PriceRuleApplied implements ShouldBroadcast
 
     public function broadcastAs(): string
     {
-        return 'price.rule_applied';
+        return DomainEvent::PRICE_RULE_APPLIED->value;
     }
 }

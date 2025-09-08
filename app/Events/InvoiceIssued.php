@@ -23,6 +23,6 @@ class InvoiceIssued implements ShouldBroadcast
 
     public function broadcastAs(): string
     {
-        return 'invoice.issued';
+        return DomainEvent::INVOICE_ISSUED->value;
     }
 }

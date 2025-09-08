@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Events\DomainEvent;
 use App\Events\ModuleToggled;
 use App\Models\AuditLog;
 use App\Models\FeatureFlag;
@@ -48,7 +49,7 @@ class ModuleManager
 
         AuditLog::create([
             'tenant_id' => $tenant->id,
-            'action' => 'module.toggled',
+            'action' => DomainEvent::MODULE_TOGGLED->value,
             'meta' => [
                 'module' => $module,
                 'enabled' => $enabled,
@@ -57,7 +58,7 @@ class ModuleManager
 
         event(new ModuleToggled($tenant, $module, $enabled));
         $this->registry?->dispatchHook(
-            $enabled ? 'module.enabled' : 'module.disabled',
+            $enabled ? DomainEvent::MODULE_ENABLED->value : DomainEvent::MODULE_DISABLED->value,
             $tenant,
             $module
         );

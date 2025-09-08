@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Events\DomainEvent;
 use App\Support\EventBus;
 use App\Support\Security\SessionManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +25,7 @@ class SessionManagerTest extends TestCase
     {
         $bus = $this->app->make(EventBus::class);
         $captured = null;
-        $bus->subscribe('auth.mfa_challenge', function (array $payload) use (&$captured) {
+        $bus->subscribe(DomainEvent::AUTH_MFA_CHALLENGE->value, function (array $payload) use (&$captured) {
             $captured = $payload;
         });
 

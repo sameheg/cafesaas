@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\DomainEvent;
 use App\Events\OrderCreated;
 use App\Events\OrderDelivered;
 use App\Events\OrderShipped;
@@ -34,9 +35,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(EventBus $bus): void
     {
-        $bus->subscribe('tenant.created', InitializeTenant::class);
-        $bus->subscribe('ticket.resolved', LogTicketFeedbackToCrm::class);
-        $bus->subscribe('candidate.accepted', AddEmployeeFromCv::class);
+        $bus->subscribe(DomainEvent::TENANT_CREATED->value, InitializeTenant::class);
+        $bus->subscribe(DomainEvent::TICKET_RESOLVED->value, LogTicketFeedbackToCrm::class);
+        $bus->subscribe(DomainEvent::CANDIDATE_ACCEPTED->value, AddEmployeeFromCv::class);
 
         Event::listen(OrderCreated::class, [SetOrderStatusCreated::class, 'handle']);
         Event::listen(OrderShipped::class, [SetOrderStatusShipped::class, 'handle']);

@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Events\DomainEvent;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,7 +14,7 @@ class TenantService
     {
         $tenant = Tenant::create(['name' => $tenantName]);
 
-        $this->bus->publish('tenant.created', [$tenant]);
+        $this->bus->publish(DomainEvent::TENANT_CREATED->value, [$tenant]);
 
         $adminRole = $tenant->roles()->where('name', 'admin')->first();
 

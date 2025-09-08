@@ -2,6 +2,7 @@
 
 namespace App\Support\Security;
 
+use App\Events\DomainEvent;
 use App\Support\AuditLogger;
 use App\Support\EventBus;
 
@@ -24,7 +25,7 @@ class SessionManager
 
     public function mfaChallenge(int $userId, string $method): void
     {
-        $this->bus->dispatchNow('auth.mfa_challenge', [
+        $this->bus->dispatchNow(DomainEvent::AUTH_MFA_CHALLENGE->value, [
             'user_id' => $userId,
             'method' => $method,
         ]);

@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Events\DomainEvent;
 use App\Events\InvoiceIssued;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
@@ -56,7 +57,7 @@ class InvoiceService
             'qr_path' => $this->generateQr($invoice),
         ]);
 
-        $this->bus->publish('invoice.issued', ['invoice_id' => $invoice->id]);
+        $this->bus->publish(DomainEvent::INVOICE_ISSUED->value, ['invoice_id' => $invoice->id]);
         event(new InvoiceIssued($invoice));
 
         return $invoice;

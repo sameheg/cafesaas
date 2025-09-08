@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Jobs\DispatchDomainEvent;
 use Illuminate\Contracts\Events\Dispatcher;
 
 class EventBus
@@ -9,6 +10,11 @@ class EventBus
     public function __construct(private Dispatcher $dispatcher) {}
 
     public function publish(string $event, array $payload = []): void
+    {
+        DispatchDomainEvent::dispatch($event, $payload);
+    }
+
+    public function dispatchNow(string $event, array $payload = []): void
     {
         $this->dispatcher->dispatch($event, $payload);
     }

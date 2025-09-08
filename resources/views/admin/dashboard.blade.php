@@ -3,7 +3,11 @@
 <h2>Tenants</h2>
 <ul>
 @foreach($tenants as $tenant)
-    <li>{{ $tenant->name }}: {{ implode(', ', $tenant->modules->pluck('module')->toArray()) }}</li>
+    <li>
+        {{ $tenant->name }}:
+        {{ implode(', ', $tenant->modules->pluck('module')->toArray()) }}
+        <a href="{{ route('admin.tenants.modules.edit', $tenant) }}">Manage</a>
+    </li>
 @endforeach
 </ul>
 

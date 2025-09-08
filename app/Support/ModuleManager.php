@@ -27,6 +27,48 @@ class ModuleManager
         'billing' => [],
     ];
 
+    /**
+     * Get the dependency map.
+     *
+     * @return array<string,array<int,string>>
+     */
+    public function dependencies(): array
+    {
+        return $this->dependencies;
+    }
+
+    /**
+     * Resolve the given modules with all dependent modules.
+     *
+     * @param  array<int,string>  $modules
+     * @return array<int,string>
+     */
+    public function resolveDependencies(array $modules): array
+    {
+        $resolved = [];
+        foreach ($modules as $module) {
+            $this->resolveModule($module, $resolved);
+        }
+
+        return $resolved;
+    }
+
+    /**
+     * Recursively resolve a module and its dependencies.
+     *
+     * @param  array<int,string>  $resolved
+     */
+    protected function resolveModule(string $module, array &$resolved): void
+    {
+        foreach ($this->dependencies[$module] ?? [] as $dependency) {
+            $this->resolveModule($dependency, $resolved);
+        }
+
+        if (! in_array($module, $resolved, true)) {
+            $resolved[] = $module;
+        }
+    }
+
     public function toggle(Tenant $tenant, string $module, bool $enabled): TenantModule
     {
         if ($enabled) {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AuditLog;
 use App\Models\Tenant;
 use App\Models\TenantModule;
-use App\Models\AuditLog;
 use Illuminate\Support\Facades\DB;
 
 class SuperAdminDashboardController extends Controller

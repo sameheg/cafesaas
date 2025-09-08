@@ -58,6 +58,9 @@ Route::prefix('api/v1')->group(function () {
         Route::get('customers/{customer}/tickets', [TicketController::class, 'customer']);
         Route::get('agents/{user}/tickets', [TicketController::class, 'agent']);
     });
+
+    Route::post('pos/orders', [\App\Http\Controllers\PosController::class, 'store']);
+    Route::get('kds/orders', [\App\Http\Controllers\KdsController::class, 'index']);
 });
 
 Route::get('/files/{file}', [FileController::class, 'download'])

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Listeners\AddEmployeeFromCv;
 use App\Listeners\InitializeTenant;
 use App\Listeners\LogTicketFeedbackToCrm;
 use App\Support\EventBus;
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $bus->subscribe('tenant.created', InitializeTenant::class);
         $bus->subscribe('ticket.resolved', LogTicketFeedbackToCrm::class);
+        $bus->subscribe('candidate.accepted', AddEmployeeFromCv::class);
 
         RateLimiter::for('global', function (Request $request) {
             return Limit::perMinute(config('security.throttle_per_minute'))

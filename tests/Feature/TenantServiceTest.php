@@ -16,17 +16,17 @@ class TenantServiceTest extends TestCase
 
         $tenant = $service->onboard('Acme', 'Admin', 'admin@example.com', 'secret');
 
-        $this->assertDatabaseHas('tenant_modules', [
+        $this->assertDatabaseHas('tenant_module_states', [
             'tenant_id' => $tenant->id,
             'module' => 'core',
             'enabled' => true,
         ]);
-        $this->assertDatabaseHas('tenant_modules', [
+        $this->assertDatabaseHas('tenant_module_states', [
             'tenant_id' => $tenant->id,
             'module' => 'security',
             'enabled' => true,
         ]);
-        $this->assertDatabaseHas('tenant_modules', [
+        $this->assertDatabaseHas('tenant_module_states', [
             'tenant_id' => $tenant->id,
             'module' => 'billing',
             'enabled' => true,

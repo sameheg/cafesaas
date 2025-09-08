@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Jobs\DispatchDomainEvent;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Support\Str;
 
 class EventBus
 {
@@ -11,7 +12,16 @@ class EventBus
 
     public function publish(string $event, array $payload = []): void
     {
-        DispatchDomainEvent::dispatch($event, $payload);
+        $envelope = [
+            'id' => (string) Str::uuid(),
+            'source' => config('app.url', ''),
+            'type' => $event,
+            'specversion' => '1.0',
+            'time' => now()->toIso8601String(),
+            'data' => $payload,
+        ];
+
+        DispatchDomainEvent::dispatch($event, $envelope);
     }
 
     public function dispatchNow(string $event, array $payload = []): void

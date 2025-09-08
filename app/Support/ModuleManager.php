@@ -7,7 +7,7 @@ use App\Events\ModuleToggled;
 use App\Models\AuditLog;
 use App\Models\FeatureFlag;
 use App\Models\Tenant;
-use App\Models\TenantModule;
+use App\Models\TenantModuleState;
 use Illuminate\Validation\ValidationException;
 
 class ModuleManager
@@ -20,17 +20,17 @@ class ModuleManager
     /**
      * Map of module dependencies.
      *
-     * @var array<string,array<int,string>>
+     * @var array<string,array<string,string>>
      */
     protected array $dependencies = [
-        'analytics' => ['billing'],
+        'analytics' => ['billing' => '^1.0'],
         'billing' => [],
     ];
 
     /**
      * Get the dependency map.
      *
-     * @return array<string,array<int,string>>
+     * @return array<string,array<string,string>>
      */
     public function dependencies(): array
     {
@@ -60,7 +60,7 @@ class ModuleManager
      */
     protected function resolveModule(string $module, array &$resolved): void
     {
-        foreach ($this->dependencies[$module] ?? [] as $dependency) {
+        foreach ($this->dependencies[$module] ?? [] as $dependency => $constraint) {
             $this->resolveModule($dependency, $resolved);
         }
 
@@ -69,14 +69,21 @@ class ModuleManager
         }
     }
 
-    public function toggle(Tenant $tenant, string $module, bool $enabled): TenantModule
+    public function toggle(Tenant $tenant, string $module, bool $enabled): TenantModuleState
     {
         if ($enabled) {
-            foreach ($this->dependencies[$module] ?? [] as $dependency) {
+            foreach ($this->dependencies[$module] ?? [] as $dependency => $constraint) {
                 $active = $tenant->modules()->where('module', $dependency)->where('enabled', true)->exists();
                 if (! $active) {
                     throw ValidationException::withMessages([
                         'module' => "Missing dependency: {$dependency}",
+                    ]);
+                }
+
+                $depMeta = $this->registry->all()[$dependency] ?? null;
+                if ($depMeta && isset($depMeta['version']) && ! version_compare($depMeta['version'], ltrim($constraint, '^'), '>=')) {
+                    throw ValidationException::withMessages([
+                        'module' => "Invalid version for {$dependency}",
                     ]);
                 }
             }

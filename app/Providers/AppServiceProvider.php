@@ -18,6 +18,7 @@ use App\Listeners\SetOrderStatusShipped;
 use App\Support\EventBus;
 use App\Support\ModuleRegistry;
 use App\Support\TenantManager;
+use App\Support\Orchestrator;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
@@ -31,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(EventBus::class);
         $this->app->singleton(TenantManager::class);
         $this->app->singleton(ModuleRegistry::class);
+        $this->app->singleton(Orchestrator::class);
     }
 
     public function boot(EventBus $bus): void

@@ -24,13 +24,13 @@ class TenantModuleUiTest extends TestCase
 
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('tenant_modules', [
+        $this->assertDatabaseHas('tenant_module_states', [
             'tenant_id' => $tenant->id,
             'module' => 'analytics',
             'enabled' => true,
         ]);
 
-        $this->assertDatabaseHas('tenant_modules', [
+        $this->assertDatabaseHas('tenant_module_states', [
             'tenant_id' => $tenant->id,
             'module' => 'billing',
             'enabled' => true,

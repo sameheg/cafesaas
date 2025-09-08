@@ -23,7 +23,7 @@ class Tenant extends Model
 
     public function modules()
     {
-        return $this->hasMany(TenantModule::class);
+        return $this->hasMany(TenantModuleState::class);
     }
 
     public function users()

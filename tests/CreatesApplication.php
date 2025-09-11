@@ -17,6 +17,9 @@ trait CreatesApplication
         $app = require $basePath.'/bootstrap/app.php';
         $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
+        // Ensure module providers are registered for testing
+        $app->make(\App\Support\ModuleRegistry::class);
+
         return $app;
     }
 }

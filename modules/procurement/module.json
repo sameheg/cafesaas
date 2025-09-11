@@ -1,0 +1,12 @@
+{
+    "name": "procurement",
+    "description": "Procurement module handling RFQs, bids, POs and GRNs",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": ["core", "inventory"],
+    "paths": [],
+    "events": ["procurement.po.created@v1"],
+    "roles": ["owner", "manager", "staff", "supplier"],
+    "checksum": "",
+    "signature": ""
+}

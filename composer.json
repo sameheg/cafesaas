@@ -7,12 +7,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "filament/filament": "^3.2",
         "intervention/image": "*",
         "laravel/framework": "^12.0",
+        "laravel/reverb": "^1.0",
         "laravel/tinker": "^2.10.1",
         "league/csv": "^9.0",
-        "filament/filament": "^3.2",
-        "laravel/reverb": "^1.0"
+        "spatie/laravel-webhook-client": "^3.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -38,6 +39,7 @@
             "Modules\\Ecommerce\\": "modules/ecommerce/src",
             "Modules\\Hospitality\\": "modules/hospitality/src",
             "Modules\\Inventory\\": "modules/inventory/src",
+            "Modules\\Procurement\\": "modules/procurement/src",
             "Modules\\Pricing\\": "modules/pricing/src",
             "Modules\\Realestate\\": "modules/realestate/src",
             "Modules\\Recruitment\\": "modules/recruitment/src",

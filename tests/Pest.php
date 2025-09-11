@@ -1,9 +1,15 @@
 <?php
 
-// Ensure a .env file exists so tests relying on its presence don't trigger warnings
+// Ensure a .env file exists with a default app key so tests relying on its presence don't trigger warnings
 $envPath = dirname(__DIR__).'/.env';
 if (! file_exists($envPath)) {
-    file_put_contents($envPath, '');
+    file_put_contents($envPath, "APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\n");
+}
+
+if (empty(getenv('APP_KEY'))) {
+    putenv('APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=');
+    $_ENV['APP_KEY'] = 'base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=';
+    $_SERVER['APP_KEY'] = 'base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=';
 }
 
 /*
@@ -12,7 +18,7 @@ if (! file_exists($envPath)) {
 |--------------------------------------------------------------------------
 |
 | The closure you provide to your test functions is always bound to a specific PHPUnit test
-| case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
+| case class. By default, that class is "PHPUnit\\Framework\\TestCase". Of course, you may
 | need to change it using the "pest()" function to bind a different classes or traits.
 |
 */

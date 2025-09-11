@@ -1,5 +1,11 @@
 <?php
 
+// Ensure a .env file exists so tests relying on its presence don't trigger warnings
+$envPath = dirname(__DIR__).'/.env';
+if (! file_exists($envPath)) {
+    file_put_contents($envPath, '');
+}
+
 /*
 |--------------------------------------------------------------------------
 | Test Case

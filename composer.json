@@ -51,7 +51,9 @@
       "Modules\\": "modules/",
       "Modules\\Marketplace\\": "modules/marketplace/src",
       "Modules\\Membership\\": "modules/membership/src",
-      "Modules\\\\Loyalty\\\\": "modules/loyalty/src"
+      "Modules\\\\Loyalty\\\\": "modules/loyalty/src",
+      "Modules\\Franchise\\": "modules/franchise/src",
+      "Modules\\Franchise\\Database\\Factories\\": "modules/franchise/database/factories/"
     },
     "classmap": [
       "modules/loyalty/src"

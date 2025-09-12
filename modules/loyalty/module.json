@@ -1,0 +1,16 @@
+{
+    "name": "loyalty",
+    "description": "Loyalty and rewards module managing points earning and burning",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": ["core", "crm", "pos"],
+    "paths": [],
+    "events": [
+        "loyalty.points.earned@v1"
+    ],
+    "roles": [
+        "manage_points"
+    ],
+    "checksum": "",
+    "signature": ""
+}

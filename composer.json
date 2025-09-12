@@ -49,6 +49,7 @@
       "Modules\\Security\\": "modules/security/src",
       "Modules\\": "modules/",
       "Modules\\Marketplace\\": "modules/marketplace/src",
+      "Modules\\Membership\\": "modules/membership/src",
       "Modules\\\\Loyalty\\\\": "modules/loyalty/src"
     },
     "classmap": [

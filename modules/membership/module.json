@@ -1,0 +1,16 @@
+{
+    "name": "membership",
+    "description": "Manages membership tiers, perks and recurring billing",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": ["core", "billing", "loyalty", "reservations", "notifications"],
+    "paths": [],
+    "events": [
+        "membership.tier.upgraded@v1"
+    ],
+    "roles": [
+        "upgrade_tier"
+    ],
+    "checksum": "",
+    "signature": ""
+}

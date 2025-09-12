@@ -37,6 +37,7 @@
       "Database\\Seeders\\": "database/seeders/",
       "Modules\\Analytics\\": "modules/analytics/src",
       "Modules\\Billing\\": "modules/billing/src",
+      "Modules\\Billing\\Database\\Factories\\": "modules/billing/database/factories/",
       "Modules\\Core\\": "modules/core/src",
       "Modules\\Crm\\": "modules/crm/src",
       "Modules\\Ecommerce\\": "modules/ecommerce/src",

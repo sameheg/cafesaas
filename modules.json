@@ -1,16 +1,46 @@
 {
   "modules": [
-    {"key": "core", "required": true},
-    {"key": "security", "required": true},
-    {"key": "billing", "required": true},
-    {"key": "pricing"},
-    {"key": "crm"},
-    {"key": "inventory"},
-    {"key": "procurement"},
-    {"key": "hospitality"},
-    {"key": "ecommerce"},
-    {"key": "realestate"},
-    {"key": "recruitment"},
-    {"key": "analytics"}
+    {
+      "key": "core",
+      "required": true
+    },
+    {
+      "key": "security",
+      "required": true
+    },
+    {
+      "key": "billing",
+      "required": true
+    },
+    {
+      "key": "pricing"
+    },
+    {
+      "key": "crm"
+    },
+    {
+      "key": "inventory"
+    },
+    {
+      "key": "procurement"
+    },
+    {
+      "key": "hospitality"
+    },
+    {
+      "key": "ecommerce"
+    },
+    {
+      "key": "realestate"
+    },
+    {
+      "key": "recruitment"
+    },
+    {
+      "key": "analytics"
+    },
+    {
+      "key": "marketplace"
+    }
   ]
 }

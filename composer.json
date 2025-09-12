@@ -48,8 +48,12 @@
       "Modules\\Recruitment\\": "modules/recruitment/src",
       "Modules\\Security\\": "modules/security/src",
       "Modules\\": "modules/",
-      "Modules\\Marketplace\\": "modules/marketplace/src"
-    }
+      "Modules\\Marketplace\\": "modules/marketplace/src",
+      "Modules\\\\Loyalty\\\\": "modules/loyalty/src"
+    },
+    "classmap": [
+      "modules/loyalty/src"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

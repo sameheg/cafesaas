@@ -1,0 +1,15 @@
+{
+    "name": "franchise",
+    "description": "Franchise management module",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [
+        "franchise.template.updated@v1",
+        "reports.aggregate.requested@v1"
+    ],
+    "roles": ["franchisor", "franchisee", "manager", "staff"],
+    "checksum": "",
+    "signature": ""
+}

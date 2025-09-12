@@ -1,0 +1,16 @@
+{
+    "name": "marketplace",
+    "description": "Marketplace module providing storefronts, listings and bids",
+    "version": "1.0.0",
+    "capabilities": [],
+    "dependencies": [],
+    "paths": [],
+    "events": [
+        "marketplace.bid.awarded@v1"
+    ],
+    "roles": [
+        "submit_bid"
+    ],
+    "checksum": "",
+    "signature": ""
+}
